@@ -1,0 +1,25 @@
+{% extends "Director/wrapperDirector.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1>Изменение информации о проекте - {{cur_project.project_name}}</h1>
+        <form method="POST" novalidate>
+            <div class="form-row">
+                {% csrf_token %}
+                {% for project in projectform %}
+                <div class="form-group col-12 fieldWrapper">
+                    <label>{{project.label_tag}}</label>
+                    <div class="form-control">{{project}}</div>
+                </div>
+                {% endfor %}
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn btn-block" value="Send">Изменение информации о
+                        проекте
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

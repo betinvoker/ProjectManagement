@@ -1,0 +1,75 @@
+{% extends "Director/wrapperDirector.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Проекты</h1>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">
+                        <small>Код договора</small>
+                    </th>
+                    <th scope="col">
+                        <small>Название проекта</small>
+                    </th>
+                    <th scope="col">
+                        <small>Тип проекта</small>
+                    </th>
+                    <th scope="col">
+                        <small>Описание</small>
+                    </th>
+                    <th scope="col">
+                        <small>Дата начала</small>
+                    </th>
+                    <th scope="col">
+                        <small>Дата конца</small>
+                    </th>
+                    <th scope="col">
+                        <small>Задачи проекта</small>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% csrf_token %}
+                {% for project in projects %}
+                <tr>
+                    <th scope="row">{{project.id}}</th>
+                    <td>
+                        <small>{{project.id_contract}}</small>
+                    </td>
+                    <td>
+                        <small>{{project.project_name}}</small>
+                    </td>
+                    <td>
+                        <small>{{project.id_type}}</small>
+                    </td>
+                    <td>
+                        <small>{{project.description}}</small>
+                    </td>
+                    <td>
+                        <small>{{project.date_start}}</small>
+                    </td>
+                    <td>
+                        <small>{{project.date_end}}</small>
+                    </td>
+                    <td>
+                        <form action="/problemProject{{project.id}}">
+                            <button type="submit" class="btn btn-outline-info col-12">
+                                <small>Задачи</small>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "Director/wrapperDirector.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="card mb-12">
+            <div class="row no-gutters">
+                <div class="col-6 col-md-3">
+                    <img src="\{{user.link_photo}}" class="card-img" alt="...">
+                </div>
+                <div class="col-6 col-md-9">
+                    <div class="card-body">
+                        <h5 class="card-title">{{user.surname}} {{user.name}} {{user.patronymic}}</h5>
+                        <p class="card-text">{{user.id_position}}</p>
+                        <p class="card-text">Стаж: {{user.experience}}
+                            {% if user.experience == 1 %}год
+                            {% else %}года
+                            {% endif %}</p>
+                        <p class="card-text">Дата рождения: {{user.date_birth}}</p>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card-footer">
+                        <small class="text-muted">Номер телефона: {{user.phone}}</small>
+                        <small class="text-muted">Email: {{user.mail}}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

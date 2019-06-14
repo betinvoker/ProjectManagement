@@ -1,0 +1,12 @@
+.container {
+    margin-bottom: 50px;
+}
+
+.jumbotron {
+    margin-bottom: 20px;
+}
+
+.footer {
+    height:30px;
+    background:rgb(33, 37, 41);
+}

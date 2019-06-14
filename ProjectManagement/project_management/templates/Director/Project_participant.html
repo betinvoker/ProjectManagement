@@ -1,0 +1,163 @@
+{% extends "Director/wrapperDirector.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <h2>Участники проекта - {{project.project_name}}</h2>
+        </div>
+        <div class="col-sm-3">
+            <span class="badge badge-pill badge-info">{{project.id_type}}</span>
+        </div>
+        <div class="col-sm-12">
+            <p>По контракту: {{project.id_contract}}</p>
+        </div>
+        <div class="col-sm-12">
+            <p>{{project.description}}</p>
+        </div>
+    </div>
+    <div class="row justify-content-end" style="margin-bottom: 20px;">
+        <div class="col-sm-12 col-md-4 col-lg--3">
+            <small>{{project.date_start}}</small>
+            -
+            <small>{{project.date_end}}</small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">
+                        <small>ФИО</small>
+                    </th>
+                    <th scope="col">
+                        <small>Должность</small>
+                    </th>
+                    <th scope="col">
+                        <small>Стаж</small>
+                    </th>
+                    <th scope="col">
+                        <small>Дата рождения</small>
+                    </th>
+                    <th scope="col">
+                        <small>Номер телефона</small>
+                    </th>
+                    <th scope="col">
+                        <small>Email</small>
+                    </th>
+                    <th scope="col">
+                        <small>Добавить в проект</small>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% csrf_token %}
+                {% for worker in workers %}
+                {% for participant in participants %}
+                {% if worker.id != participant.id_worker %}
+                <tr>
+                    <th scope="row">{{worker.id}}</th>
+                    <td>
+                        <small>{{worker.surname}} {{worker.name}} {{worker.patronymic}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.id_position}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.experience}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.date_birth}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.phone}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.mail}}</small>
+                    </td>
+                    <td>
+                        <form action="/updateCustomer{{customer.id}}">
+                            <button type="submit" class="btn btn-outline-info col-12">
+                                <small>Добавить</small>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">
+                        <small>ФИО</small>
+                    </th>
+                    <th scope="col">
+                        <small>Должность</small>
+                    </th>
+                    <th scope="col">
+                        <small>Стаж</small>
+                    </th>
+                    <th scope="col">
+                        <small>Дата рождения</small>
+                    </th>
+                    <th scope="col">
+                        <small>Номер телефона</small>
+                    </th>
+                    <th scope="col">
+                        <small>Email</small>
+                    </th>
+                    <th scope="col">
+                        <small>Исключить из проекта</small>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% csrf_token %}
+                {% for worker in workers %}
+                {% if worker.id == participants.id_worker %}
+                <tr>
+                    <th scope="row">{{worker.id}}</th>
+                    <td>
+                        <small>{{worker.surname}} {{worker.name}} {{worker.patronymic}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.id_position}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.experience}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.date_birth}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.phone}}</small>
+                    </td>
+                    <td>
+                        <small>{{worker.mail}}</small>
+                    </td>
+                    <td>
+                        <form action="/updateCustomer{{customer.id}}">
+                            <button type="submit" class="btn btn-outline-danger col-12">
+                                <small>Исключить</small>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endif%}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

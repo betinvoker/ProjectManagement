@@ -1,0 +1,96 @@
+{% extends "Director/wrapperDirector.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Заказчики</h1>
+        </div>
+        <div class="col-sm-12">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo"
+                                    aria-expanded="false" aria-controls="collapseTwo">
+                                Добавить заказчика
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <form method="POST" novalidate>
+                                <div class="form-row">
+                                    {% csrf_token %}
+                                    {% for cust in customerform %}
+                                    <div class="form-group col-md-4 col-sm-6 col-12 fieldWrapper">
+                                        <label>{{cust.label_tag}}</label>
+                                        <div class="form-control">{{cust}}</div>
+                                    </div>
+                                    {% endfor %}
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" value="Send">
+                                        Добавление
+                                        заказчика
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">
+                            <small>Заказчик</small>
+                        </th>
+                        <th scope="col">
+                            <small>Тип заказчика</small>
+                        </th>
+                        <th scope="col">
+                            <small>Номер телефона</small>
+                        </th>
+                        <th scope="col">
+                            <small>Email</small>
+                        </th>
+                        <th scope="col">
+                            <small>Редактировать информацию</small>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% csrf_token %}
+                    {% for customer in customers %}
+                    <tr>
+                        <th scope="row">{{customer.id}}</th>
+                        <td>
+                            <small>{{customer.customer}}</small>
+                        </td>
+                        <td>
+                            <small>{{customer.id_type_customer}}</small>
+                        </td>
+                        <td>
+                            <small>{{customer.phone}}</small>
+                        </td>
+                        <td>
+                            <small>{{customer.mail}}</small>
+                        </td>
+                        <td>
+                            <form action="/updateCustomer{{customer.id}}">
+                                <button type="submit" class="btn btn-outline-info col-12">
+                                    <small>Изменение</small>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

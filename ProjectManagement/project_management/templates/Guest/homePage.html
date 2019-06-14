@@ -1,0 +1,31 @@
+{% extends "Guest/wrapper.html" %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4 text-center">"ProjectManagement"</h1>
+        <blockquote class="blockquote text-center">
+            <p class="mb-0">Большинство хороших программистов делают свою работу не потому, что ожидают оплаты или
+                признания, а потому что получают удовольствие от программирования.
+            </p>
+            <footer class="blockquote-footer"><cite title="Название источника">Linus Torvalds</cite>
+            </footer>
+        </blockquote>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        {% csrf_token %}
+        {% for p in projects %}
+        <div class="card border-success col-lg-12" style="margin-bottom:20px;">
+            <div class="card-header bg-transparent border-success text-right">{{p.id_type}}</div>
+            <div class="card-body text-dark">
+                <h5 class="card-title text-center">{{p.project_name}}</h5>
+                <p class="card-text">{{p.description}}</p>
+            </div>
+            <div class="card-footer bg-transparent border-success text-right">{{p.date_start}} - {{p.date_end}}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

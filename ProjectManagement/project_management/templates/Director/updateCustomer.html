@@ -1,0 +1,25 @@
+{% extends "Director/wrapperDirector.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1>Изменение информации о заказчике - {{cur_customer.customer}}</h1>
+        <form method="POST" novalidate>
+            <div class="form-row">
+                {% csrf_token %}
+                {% for customer in customerform %}
+                <div class="form-group col-12 fieldWrapper">
+                    <label>{{customer.label_tag}}</label>
+                    <div class="form-control">{{customer}}</div>
+                </div>
+                {% endfor %}
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn btn-block" value="Send">Изменение информации о
+                        заказчике
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

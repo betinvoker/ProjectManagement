@@ -1,0 +1,18 @@
+{% extends "Guest/form_template.html" %}
+
+{% block content %}
+<form method="POST" novalidate>
+    {% csrf_token %}
+    <div class="form-row">
+        {% csrf_token %}
+        {% for user in userform %}
+        <div class="form-group col-12">
+            <label>{{user.label_tag}}</label>
+            <div class="form-control">{{user}}</div>
+            <div class="error">{{user.errors}}</div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary btn-lg btn-block" value="Send">Регистрация</button>
+    </div>
+</form>
+{% endblock %}

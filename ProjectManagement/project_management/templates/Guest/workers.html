@@ -1,0 +1,36 @@
+{% extends "Guest/wrapper.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Сотрудники</h1>
+        </div>
+        <div class="card-deck">
+            {% for worker in workers %}
+            <div class="card col-md-3">
+                <img src="\{{worker.link_photo}}" class="card-img-top" alt="Фотография работника">
+                <div class="card-body">
+                    <h6 class="card-title">{{worker.surname}} {{worker.name}} {{worker.patronymic}}</h6>
+                    <p class="card-text">{{worker.id_position}}</p>
+                    <p class="card-text">Стаж: {{worker.experience}}
+                        {% if worker.experience == 1 %}год
+                        {% else %}года
+                        {% endif %}</p>
+                    <p class="card-text">Дата рождения: {{worker.date_birth}}</p>
+                    <form action="/workerPage{{worker.id}}">
+                        <button type="submit" class="btn btn-block btn-outline-dark">
+                            <small>Профиль сотрудника</small>
+                        </button>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Номер телефона: {{worker.phone}}</small>
+                    <small class="text-muted">Email: {{worker.mail}}</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

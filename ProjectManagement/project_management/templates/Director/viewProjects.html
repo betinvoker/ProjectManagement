@@ -1,0 +1,169 @@
+{% extends "Director/wrapperDirector.html" %}
+
+{% block content %}
+{% csrf_token %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+            <h2>Контракт - {{contract.num_contract}}</h2>
+        </div>
+        <div class="col-sm-2">
+            {% if contract.status == 0 %}
+            <span class="badge badge-pill badge-danger">Не выполнен</span>
+            {% endif %}
+            {% if contract.status == 1 %}
+            <span class="badge badge-pill badge-warning">Выполняется</span>
+            {% endif %}
+            {% if contract.status == 2 %}
+            <span class="badge badge-pill badge-success">Выполнен</span>
+            {% endif %}
+        </div>
+        <div class="col-sm-12">
+            <p>{{contract.comment}}</p>
+        </div>
+    </div>
+    <div class="row justify-content-end" style="margin-bottom: 20px;">
+        <div class="col-sm-12 col-md-4 col-lg--3">
+            <small>{{contract.date_start}}</small>
+            -
+            <small>{{contract.date_end}}</small>
+        </div>
+    </div>
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseTwo"
+                            aria-expanded="false" aria-controls="collapseTwo">Добавление проекта
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body">
+                    <form method="POST" novalidate>
+                        <div class="form-row">
+                            {% csrf_token %}
+                            {% for project in projectform %}
+                            <div class="form-group col-md-4 col-sm-6 col-12 fieldWrapper">
+                                <label>{{project.label_tag}}</label>
+                                <div class="form-control">{{project}}</div>
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn-primary btn-lg btn-block" value="Send">Добавление
+                                проекта
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">
+                    <small>Код договора</small>
+                </th>
+                <th scope="col">
+                    <small>Название проекта</small>
+                </th>
+                <th scope="col">
+                    <small>Тип проекта</small>
+                </th>
+                <th scope="col">
+                    <small>Дата начала</small>
+                </th>
+                <th scope="col">
+                    <small>Дата конца</small>
+                </th>
+                <th scope="col">
+                    <small>Подробная информация</small>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for project in projects %}
+            <tr>
+                <th scope="row">{{project.id}}</th>
+                <td>
+                    <small>{{project.id_contract}}</small>
+                </td>
+                <td>
+                    <small>{{project.project_name}}</small>
+                </td>
+                <td>
+                    <small>{{project.id_type}}</small>
+                </td>
+                <td>
+                    <small>{{project.date_start}}</small>
+                </td>
+                <td>
+                    <small>{{project.date_end}}</small>
+                </td>
+                <td>
+                    <div class="card">
+                        <button class="btn btn-outline-info collapsed" type="button" data-toggle="collapse"
+                                data-target="#collapseTwo{{project.id}}" aria-expanded="false"
+                                aria-controls="collapseTwo">
+                            <small>Подробнее</small>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <div id="collapseTwo{{project.id}}" class="collapse" aria-labelledby="headingTwo"
+                     data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h2>Проект - {{project.project_name}}
+                                    <span class="badge badge-primary"
+                                          style="font-size:9pt; position: relative; bottom: 10px;">
+                                    {{project.id_type}}
+                                </span>
+                                </h2>
+                            </div>
+                            <div class="col-sm-12">
+                                <p>{{project.description}}</p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-sm-12 col-md-4 col-lg--3" style="margin-bottom: 20px;">
+                                <small>{{project.date_start}}</small>
+                                -
+                                <small>{{project.date_end}}</small>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="btn-group btn-group-toggle">
+                                    <form action="/projectParticipant{{project.id}}">
+                                        <button type="submit" class="btn btn-outline-dark">
+                                            <small>Участники проекта</small>
+                                        </button>
+                                    </form>
+                                    <form action="/problemProject{{project.id}}">
+                                        <button type="submit" class="btn btn-outline-dark">
+                                            <small>Задачи проекта</small>
+                                        </button>
+                                    </form>
+                                    <form action="/updateProject{{project.id}}">
+                                        <button type="submit" class="btn btn-outline-info">
+                                            <small>Изменение информации о проекте</small>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
